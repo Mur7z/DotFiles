@@ -1,0 +1,346 @@
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;
+;;	    ____        __      __
+;;	   / __ \____  / /_  __/ /_  ____ ______
+;;	  / /_/ / __ \/ / / / / __ \/ __ `/ ___/
+;;	 / ____/ /_/ / / /_/ / /_/ / /_/ / /
+;;	/_/    \____/_/\__, /_.___/\__,_/_/
+;;	              /____/
+;;
+;; Created By Fabian Jiménez @Mur7z
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[colors]
+
+bg = #131313
+fg = #FFFAFA
+
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+blue-gray = #546e7a
+
+[bar/base]
+
+monitor =
+monitor-fallback =
+
+font-0 = "Scientifica:size=9;2"
+font-1 = "Siji:size=9;2"
+font-2 = "Waffle:size=10;2"
+font-3 = "Hack Nerd Font Mono:pixelsize=10.3;3"
+font-4 = "Noto Sans CJK JP:size=9;2"
+font-5 = "Material Icons:size=9;4"
+
+
+height = 32
+
+background = ${colors.bg}
+foreground = ${color.fg}
+
+radius = 4.0
+
+override-redirect = false
+offset-y = 10
+
+bottom = false
+fixed-center = true
+wm-restack =
+
+monitor-strict = false
+
+[bar/bar1]
+
+inherit = bar/base
+width = 14.5%
+
+foreground = ${colors.white}
+
+offset-x = 3.5%
+
+modules-left =  workspaces
+
+[bar/bar2]
+
+inherit = bar/base
+width = 19.4%
+enable-ipc = true
+
+foreground = ${colors.white}
+
+offset-x = 51.5%
+
+modules-left = spotify spotify-prev spotify-play-pause spotify-next
+
+[bar/bar3]
+
+inherit = bar/base
+width = 25.1%
+
+foreground = ${colors.fg}
+
+offset-x = 71.3%
+
+modules-left =  date alsa memory battery
+
+[bar/bar4]
+
+inherit = bar/base
+width = 2.4%
+
+foreground = ${colors.fg}
+
+offset-x = 0.5%
+
+modules-left =  menu
+
+[bar/bar5]
+
+inherit = bar/base
+width = 2.4%
+
+foreground = ${colors.fg}
+
+offset-x = 97.0%
+
+modules-left = powermenu
+
+[bar/bar6]
+
+inherit = bar/base
+width = 16.4%
+enable-ipc = true
+
+foreground = ${colors.white}
+
+offset-x = 34.5%
+
+modules-left = title
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+
+battery = BAT0
+adapter = ACAD
+
+poll-interval = 2
+
+time-format = %H:%M
+
+format-charging = <animation-charging> <label-charging>
+format-charging-prefix =
+
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full = <label-full>
+format-full-prefix = " "
+format-full-prefix-foreground = ${color.red}
+
+label-charging = %percentage%%
+
+label-discharging = %percentage%%
+
+label-full = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${color.amber}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-foreground = ${color.green}
+
+animation-charging-framerate = 750
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <ramp-volume> <label-volume>
+
+label-volume = %percentage%%
+
+format-muted-prefix = 
+label-muted = " Muted"
+label-muted-foreground = ${color.ac}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+ramp-volume-foreground = ${color.pink}
+
+ramp-headphones-0 = 
+ramp-headphones-1 = 
+
+format-padding = 2
+
+[module/cpu]
+type = internal/cpu
+
+interval = 0.5
+
+format = <label>
+format-prefix = 
+format-prefix-foreground = ${color.yellow}
+
+label = " %percentage%%"
+
+ramp-load-0 = 
+ramp-load-1 = 
+ramp-load-2 = 
+ramp-load-3 = 
+ramp-load-4 = 
+
+format-padding = 2
+
+[module/date]
+type = internal/date
+
+interval = 1.0
+
+date = %A, %d %B
+
+time = at %I:%M %p
+
+date-alt = It's %A, %d %B %Y
+time-alt = at %k:%M:%S
+
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${color.red}
+
+label = %date% %time%
+
+format-padding = 2
+
+[module/memory]
+type = internal/memory
+
+interval = 3
+
+format = <label>
+format-prefix = 
+format-prefix-foreground = ${color.blue}
+
+label = " %mb_used%"
+
+format-padding = 2
+
+[module/spotify]
+type = custom/script
+tail = true
+format-prefix = "  "
+format = <label>
+exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
+format-padding = 2
+
+[module/spotify-prev]
+type = custom/script
+exec = echo ""
+format = <label>
+click-left = playerctl previous spotify
+format-padding = 1
+
+[module/spotify-play-pause]
+type = custom/ipc
+hook-0 = echo ""
+hook-1 = echo ""
+initial = 1
+click-left = playerctl play-pause spotify
+format-padding = 1
+
+[module/spotify-next]
+type = custom/script
+exec = echo ""
+format = <label>
+click-left = playerctl next spotify
+format-padding = 1
+
+[module/workspaces]
+type = internal/xworkspaces
+pin-workspaces = false
+enable-click = true
+enable-scroll = true
+format = <label-state>
+format-padding = 2
+
+icon-default = 
+
+label-active = 
+label-occupied = 
+label-urgent = 
+label-empty = 
+
+label-active-foreground = #FFFAFA
+label-active-underline = #FFFAFA
+
+label-occupied-foreground = #FFFAFA
+label-occupied-underline = #FFFAFA
+
+label-urgent-foreground = ${color.fg}
+label-urgent-underline = ${color.fg}
+
+label-empty-foreground = ${color.fg}
+
+label-occupied-padding = 1
+label-empty-padding = 1
+label-urgent-padding = 1
+label-active-padding = 1
+
+[module/menu]
+type = custom/text
+content = 
+;alt-icon =  
+content-padding =  2
+content-background = ${color.bg}
+content-foreground = ${color.fg}
+click-left = $HOME/.config/polybar/scripts/menu
+click-right = $HOME/.config/polybar/scripts/menu
+
+[module/powermenu]
+type = custom/text
+content = 
+content-padding = 2
+content-background = ${color.bg}
+content-foreground = ${color.fg}
+click-left = $HOME/.config/polybar/scripts/sysmenu
+click-right = $HOME/.config/polybar/scripts/sysmenu
+
+[module/title]
+type = internal/xwindow
+
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${color.fg}
+
+format-padding = 2
+
+label = %title%
+label-maxlen = 37
+
